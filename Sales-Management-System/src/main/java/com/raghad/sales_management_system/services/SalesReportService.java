@@ -1,6 +1,8 @@
 package com.raghad.sales_management_system.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Scope;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import java.util.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
@@ -12,6 +14,7 @@ import com.raghad.sales_management_system.entities.Client;
 import com.raghad.sales_management_system.DTOs.SalesReport;
 
 @Service
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class SalesReportService {
     private final SaleOperationRepository saleOperationRepository;
     private List<SaleOperation> saleOperations;
