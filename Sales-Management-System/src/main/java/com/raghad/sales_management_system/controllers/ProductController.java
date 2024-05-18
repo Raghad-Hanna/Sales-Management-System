@@ -8,6 +8,7 @@ import java.util.List;
 import com.raghad.sales_management_system.services.ProductService;
 import com.raghad.sales_management_system.entities.Product;
 import com.raghad.sales_management_system.DTOs.ProductUpdate;
+import com.raghad.sales_management_system.exceptions.ResourceIdsMismatchException;
 
 @RestController
 @RequestMapping(path = "api/products")
@@ -31,6 +32,8 @@ public class ProductController {
 
     @PutMapping(path = "/{id}")
     public Product updateProduct(@Valid @RequestBody ProductUpdate productUpdate, @PathVariable("id") Integer id) {
+        if(productUpdate.id() != id)
+            throw new ResourceIdsMismatchException("The product ids in the URI and in the request payload must match");
         return this.productService.updateProduct(productUpdate.toProduct(), id);
     }
 

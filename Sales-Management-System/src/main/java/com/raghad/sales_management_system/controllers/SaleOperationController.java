@@ -8,6 +8,7 @@ import java.util.List;
 import com.raghad.sales_management_system.services.SaleOperationService;
 import com.raghad.sales_management_system.entities.SaleOperation;
 import com.raghad.sales_management_system.DTOs.SaleOperationUpdate;
+import com.raghad.sales_management_system.exceptions.ResourceIdsMismatchException;
 
 @RestController
 @RequestMapping(path = "api/sale-operations")
@@ -31,6 +32,8 @@ public class SaleOperationController {
 
     @PutMapping(path = "/{id}")
     public SaleOperation updateSaleOperation(@Valid @RequestBody SaleOperationUpdate saleOperationUpdate, @PathVariable("id") Integer id) {
+        if(saleOperationUpdate.id() != id)
+            throw new ResourceIdsMismatchException("The sale operation ids in the URI and in the request payload must match");
         return this.saleOperationService.updateSaleOperation(saleOperationUpdate.toSaleOperation(), id);
     }
 }
